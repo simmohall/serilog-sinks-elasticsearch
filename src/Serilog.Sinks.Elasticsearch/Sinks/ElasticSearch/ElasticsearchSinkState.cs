@@ -150,7 +150,11 @@ namespace Serilog.Sinks.Elasticsearch
             {
                 if (!_options.OverwriteTemplate)
                 {
+#if NETSTANDARD2_0
+                    var templateExistsResponse = _client.Indices.TemplateExistsForAll<DynamicResponse>(_templateName);
+#else
                     var templateExistsResponse = _client.IndicesExistsTemplateForAll<DynamicResponse>(_templateName);
+#endif                   
                     if (templateExistsResponse.HttpStatusCode == 200)
                     {
                         TemplateRegistrationSuccess = true;
@@ -160,8 +164,11 @@ namespace Serilog.Sinks.Elasticsearch
                 }
 
                 Console.WriteLine(_client.Serializer.SerializeToString(GetTemplateData()));
+#if NETSTANDARD2_0
+                var result = _client.Indices.PutTemplateForAll<DynamicResponse>(_templateName, GetTempatePostData());
+#else
                 var result = _client.IndicesPutTemplateForAll<DynamicResponse>(_templateName, GetTempatePostData());
-
+#endif
                 if (!result.Success)
                 {
                     ((IElasticsearchResponse)result).TryGetServerErrorReason(out var serverError);

@@ -49,7 +49,7 @@
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-        <PackageReference Include="Elasticsearch.Net" Version="7.0.0-alpha2" />
+        <PackageReference Include="Elasticsearch.Net" Version="7.0.0" />
         <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     </ItemGroup>
 
@@ -60,7 +60,7 @@
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <NoWarn>1591;1701;1702</NoWarn>
-    <DefineConstants>$(DefineConstants);DURABLE;THREADING_TIMER</DefineConstants>
+    <DefineConstants>$(DefineConstants);DURABLE;THREADING_TIMER;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
